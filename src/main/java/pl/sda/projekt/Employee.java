@@ -151,4 +151,8 @@ public class Employee {
         }
         return result;
     }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

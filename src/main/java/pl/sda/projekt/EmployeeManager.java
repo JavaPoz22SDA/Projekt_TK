@@ -36,7 +36,7 @@ public class EmployeeManager {
     public void saveFile() throws IOException {
         System.out.print("Podaj nazwę pliku do zapisu: ");
         String fileName = scanner.nextLine();
-
+int i;
         File file = new File(fileName);
         FileWriter writer = new FileWriter(file);
         for (Employee e : employees) {
@@ -61,6 +61,71 @@ public class EmployeeManager {
         if (selected <= employees.size()) {
             employees.remove(selected - 1);
             System.out.println("Usunięto pracownika!");
+        }
+    }
+    public void editEmployee() {
+        int i = 1;
+        boolean isContinued=true;
+        Employee tempEmployee;
+        System.out.println("\nWybierz pracownika do edycji.");
+        for (Employee e : employees) {
+            System.out.println("\nPracownik - " + i++);
+            e.displayAll();
+        }
+        System.out.println("\nTwój wybór (numer): ");
+        int selected = scanner.nextInt()-1;
+//        if (scanner.nextInt() <= employees.size()) {
+//        }
+        tempEmployee=employees.get(selected);
+        System.out.println("Wybrano pracownika: " + tempEmployee.displayNameUpperCase());
+        while (isContinued) {
+            System.out.println("Wybierz dane do edycji:");
+            System.out.println("1. Nazwsko (tylko kobiety)");
+            System.out.println("2. Nr działu");
+            System.out.println("3. Płaca");
+            System.out.println("4. Wiek");
+            System.out.println("5. Liczba dzieci");
+            System.out.println("6. Stan cywilny");
+            System.out.println("0. Zapisz zmiany");
+            System.out.println("\nTwój wybór (numer): ");
+            int selectedSubMenu = scanner.nextInt();
+            switch (selectedSubMenu) {
+                case 1:
+                    if (tempEmployee.getGender() == 'M')
+                        System.out.println("Ten pracownik nie jest kobietą.");
+                    else {
+                        System.out.print("Podaj nowe nazwisko: ");
+                        tempEmployee.setLastName(scanner.nextLine());
+                    }
+                    break;
+                case 2:
+                    System.out.print("Podaj nowy nr działu: ");
+                    tempEmployee.setNrDepartment(scanner.nextInt());
+                    break;
+                case 3:
+                    System.out.print("Podaj nowe zarobki: ");
+                    tempEmployee.setSalary(scanner.nextFloat());
+                    break;
+                case 4:
+                    System.out.print("Podaj nowy wiek: ");
+                    tempEmployee.setAge(scanner.nextInt());
+                    break;
+                case 5:
+                    System.out.print("Podaj nową liczbę dzieci: ");
+                    tempEmployee.setKids(scanner.nextInt());
+                    break;
+                case 6:
+                    System.out.print("Podaj nowy stan cywilny (true - mężatka/żonaty): ");
+                    tempEmployee.setMaritalStatus(scanner.nextBoolean());
+                    break;
+                case 0:
+                    employees.remove(selected);
+                    employees.add(tempEmployee);
+                    System.out.println("Zapisano zmiany.");
+                    isContinued=false;
+                    break;
+
+            }
         }
     }
 }
